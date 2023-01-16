@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import TheWelcome from "../components/TheWelcome.vue";
+import { useArticles } from "@/services/api/articles";
+
+const { data, isError, isLoading } = useArticles();
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+
+    <div>
+
+    </div>
   </main>
 </template>

@@ -6,9 +6,6 @@ const { data, isError, isLoading } = useArticles();
 
 <template>
   <main>
-
-    <div>
-
-    </div>
+    <div>Home</div>
   </main>
 </template>

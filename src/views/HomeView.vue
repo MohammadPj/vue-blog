@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { useArticles } from "@/services/api/articles";
+import Article from "@/components/home/Articles.vue";
 
-const { data, isError, isLoading } = useArticles();
 </script>
 
 <template>
   <main>
-    <div>Home</div>
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="9">
+          <Article />
+        </v-col>
+        <v-col cols="12" sm="3"> </v-col>
+      </v-row>
+    </v-container>
   </main>
 </template>

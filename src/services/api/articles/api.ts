@@ -20,7 +20,11 @@ export interface IArticle {
   author: IAuthor;
 }
 
-export const getArticles = async (): Promise<{
+export const getArticles = (): Promise<{
   articles: IArticle[];
   articlesCount: number;
 }> => http.get("articles").then((res) => res.data);
+
+export const getArticle = (title: string): Promise<{ article: IArticle }> => {
+  return http.get(`articles/${title}`).then((res) => res.data);
+};

@@ -1,18 +1,27 @@
 <template>
-  <v-row v-if="data" class="w-100 mt-5">
-    <v-col cols="12" sm="6" v-for="article in data.articles" :key="article.id">
+  <v-row class="w-100 mt-5">
+    <v-col
+      cols="12"
+      sm="6"
+      v-for="article in articles.articles"
+      :key="article.id"
+    >
       <Article :article="article" />
     </v-col>
+
+    <p v-if="!articles.articles.length">there isn't any feed</p>
   </v-row>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Article from "@/components/home/components/article-list/components/Article.vue";
-import { useArticles } from "@/services/api/articles";
+import { IArticle } from "@/services/api/articles/api";
 
-const { data, isError, isLoading } = useArticles();
+interface Props {
+  articles: IArticle[];
+}
 
-// const articles = ref([{}]);
+const { articles } = defineProps<Props>();
 </script>
 
 <style scoped></style>

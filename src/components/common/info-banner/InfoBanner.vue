@@ -37,7 +37,11 @@
         {{ following ? "unfollow" : "follow" }} {{ username }}
       </v-btn>
 
-      <v-btn @click.stop.prevent variant="flat" color="white"
+      <v-btn
+        @click.stop.prevent="handleLike"
+        :loading="isLoading"
+        variant="flat"
+        color="white"
         >Like
         <v-icon class="ml-2" color="grey" icon="mdi-thumb-up"></v-icon>
         <span class="ml-1">{{ favoritesCount }}</span>
@@ -47,6 +51,9 @@
 </template>
 
 <script setup lang="ts">
+import { likeArticleUseMutation } from "@/services/api/articles";
+import { useQueryClient } from "@tanstack/vue-query";
+
 interface Props {
   image: string;
   favoritesCount: number;
@@ -54,6 +61,7 @@ interface Props {
   username: string;
   mode: "articles" | "singleArticle";
   following?: boolean;
+  slug?: string;
 }
 
 const {
@@ -62,10 +70,23 @@ const {
   createdAt,
   username,
   following,
+  slug,
   mode = "articles",
 } = defineProps<Props>();
 
-console.log("mode", mode);
+const queryClient = useQueryClient();
+
+const { mutate: mutateLikeArticle, isLoading } = likeArticleUseMutation(
+  slug as string
+);
+
+const handleLike = () => {
+  mutateLikeArticle(undefined, {
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["articles"] });
+    },
+  });
+};
 </script>
 
 <style scoped></style>

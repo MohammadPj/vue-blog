@@ -19,12 +19,17 @@ const router = createRouter({
           name: "single-article",
           component: () => import("../views/article/single-article/SingleArticleView.vue"),
         },
+        {
+          path: "/signup",
+          component: () => import("@/views/signup/SignupView.vue"),
+          name: "signup",
+        },
+        {
+          path: "/login",
+          component: () => import("@/views/login/LoginView.vue"),
+          name: "login",
+        },
       ],
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: () => import("../views/AboutView.vue"),
     },
   ],
 });

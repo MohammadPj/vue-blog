@@ -11,8 +11,8 @@ loadFonts();
 const app = createApp(App);
 
 app.use(VueQueryPlugin);
+app.use(router);
 app.use(createPinia());
 app.use(vuetify);
-app.use(router);
 
 app.mount("#app");

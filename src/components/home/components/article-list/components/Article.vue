@@ -6,6 +6,7 @@
         :username="article.author.username"
         :createdAt="article.createdAt"
         :favoritesCount="article.favoritesCount"
+        :slug="article.slug"
       />
 
       <ArticleBody :description="article.description" :title="article.title" />
@@ -14,9 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import type { IArticle } from "@/services/api/articles/api";
+
 import ArticleHeader from "@/components/home/components/article-list/components/components/ArticleHeader.vue";
 import ArticleBody from "@/components/home/components/article-list/components/components/ArticleBody.vue";
+import type {IArticle} from "@/services/api/articles/types";
 
 interface Props {
   article: IArticle;

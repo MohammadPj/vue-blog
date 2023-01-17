@@ -2,7 +2,7 @@
   <div class="position-relative">
     <img
       class="w-100 d-flex image"
-      src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+      src="@/assets/image/image-1.jpg"
       alt="article"
     />
 
@@ -12,6 +12,8 @@
       :createdAt="createdAt"
       :username="username"
       mode="articles"
+      :slug="slug"
+
     />
   </div>
 </template>
@@ -24,13 +26,11 @@ interface Props {
   favoritesCount: number;
   createdAt: string;
   username: string;
+  slug: string
 }
 
-const { image, favoritesCount, createdAt, username } = defineProps<Props>();
+const { image, favoritesCount, createdAt, username, slug } = defineProps<Props>();
 
-const handleLike = () => {
-  console.log("like");
-};
 </script>
 
 <style scoped>

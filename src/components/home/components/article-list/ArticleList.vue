@@ -4,7 +4,7 @@
       cols="12"
       sm="6"
       v-for="article in articles.articles"
-      :key="article.id"
+      :key="article.slug"
     >
       <Article :article="article" />
     </v-col>
@@ -15,10 +15,12 @@
 
 <script setup lang="ts">
 import Article from "@/components/home/components/article-list/components/Article.vue";
-import { IArticle } from "@/services/api/articles/api";
+import type { IArticle } from "@/services/api/articles/types";
 
 interface Props {
-  articles: IArticle[];
+  articles: {
+    articles: IArticle[]
+  };
 }
 
 const { articles } = defineProps<Props>();

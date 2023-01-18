@@ -4,12 +4,23 @@ import {
   deleteArticleComment,
   getArticle,
   getArticleComments,
-  getArticles, getFeeds, getTags, likeArticle,
+  getArticles,
+  getFeeds,
+  getTags,
+  likeArticle,
 } from "@/services/api/articles/api";
 
 export const useTags = () => useQuery(["tags"], getTags);
 
-export const useArticles = () => useQuery(["articles"], getArticles);
+export const useArticles = (page: any, tag: any) => {
+  return useQuery(
+    ["articles", page, tag],
+    () => getArticles(page.value, tag.value),
+    {
+      keepPreviousData: true,
+    }
+  );
+};
 
 export const useFeeds = () => useQuery(["feeds"], getFeeds);
 

@@ -23,5 +23,5 @@ export interface IComment {
   body: string;
   createdAt: string;
   id: string;
-  updateAt: string
+  updateAt: string;
 }

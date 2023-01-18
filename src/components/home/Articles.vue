@@ -12,6 +12,13 @@
 
               <template v-if="articles">
                 <ArticleList :articles="tab === 1 ? feeds : articles" />
+                <v-pagination
+                  v-if="articles.articlesCount > 10"
+                  v-model="page"
+                  class="my-4"
+                  :length="Math.ceil(articles.articlesCount / 10)"
+                  :total-visible="6"
+                ></v-pagination>
               </template>
 
               <div v-else>Loading</div>
@@ -24,20 +31,35 @@
       </v-row>
     </v-container>
   </main>
-
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref, watch } from "vue";
 import ArticleList from "@/components/home/components/article-list/ArticleList.vue";
 import { useArticles, useFeeds } from "@/services/api/articles";
 import { useAuthStore } from "@/stores/auth";
 import Tags from "@/components/home/components/tags/Tags.vue";
-const tab = ref(1);
-const auth = useAuthStore();
+import { useRoute, useRouter } from "vue-router";
 
-const { data: articles } = useArticles();
-const { data: feeds, isError: feedError, isLoading: feedLoading } = useFeeds();
+const route = useRoute();
+const router = useRouter();
+
+const auth = useAuthStore();
+const tab = ref(2);
+const page = ref(route?.query?.page ? +route?.query?.page : 1);
+const tag = ref(route?.query?.tag);
+
+const { data: articles } = useArticles(page, tag);
+const { data: feeds } = useFeeds();
+
+watch(route, () => {
+  tag.value = route.query.tag;
+  page.value = route?.query?.page ? +route?.query?.page : 1;
+});
+
+watch(page, (value) => {
+  router.push({ query: { ...route.query, page: value } });
+});
 </script>
 
 <style scoped></style>

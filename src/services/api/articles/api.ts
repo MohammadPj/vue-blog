@@ -1,14 +1,26 @@
 import { http } from "@/services/core/http";
-import type {IArticle, IComment} from "@/services/api/articles/types";
+import type { IArticle, IComment } from "@/services/api/articles/types";
 
 export const getTags = (): Promise<{
   tags: string[];
 }> => http.get("tags").then((res) => res.data);
 
-export const getArticles = (): Promise<{
+export const getArticles = (
+  page: number,
+  tag: string
+): Promise<{
   articles: IArticle[];
   articlesCount: number;
-}> => http.get("articles").then((res) => res.data);
+}> =>
+  http
+    .get("articles", {
+      params: {
+        limit: 10,
+        offset: (page - 1) * 10,
+        tag,
+      },
+    })
+    .then((res) => res.data);
 
 export const getFeeds = (): Promise<{
   articles: IArticle[];
@@ -32,9 +44,7 @@ export const addArticleComment = (
   return http.post(`articles/${title}/comments`, body).then((res) => res.data);
 };
 
-export const likeArticle = (
-  title: string
-): Promise<{ article: IArticle }> => {
+export const likeArticle = (title: string): Promise<{ article: IArticle }> => {
   return http.post(`articles/${title}/favorite`).then((res) => res.data);
 };
 
